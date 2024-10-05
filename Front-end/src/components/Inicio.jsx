@@ -7,7 +7,7 @@ const Inicio = () => {
       <div style={styles.introText}>
         <h1 style={styles.heading}>Bienvenido al Sistema de Gestión Escolar</h1>
         <p style={styles.paragraph}>
-          Este sistema está diseñado para facilitar la administración educativa, brindando herramientas intuitivas para gestionar calificaciones, añadir estudiantes y profesores, y mantener toda la información organizada de manera eficiente. Nuestro objetivo es mejorar la comunicación y la colaboración en el entorno académico.
+          !Este sistema está diseñado para facilitar la administración educativa, brindando herramientas intuitivas para gestionar calificaciones, añadir estudiantes y profesores, y mantener toda la información organizada de manera eficiente. Nuestro objetivo es mejorar la comunicación y la colaboración en el entorno académico.
         </p>
       </div>
 

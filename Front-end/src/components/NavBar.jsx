@@ -27,12 +27,12 @@ const NavBar = () => {
                         <li className={`nav-item ${location.pathname === '/register' ? 'active' : ''}`}>
                             <Link className="nav-link" to="/register">Registro</Link>
                         </li>
-                        <li className={`nav-item ${location.pathname === '/agregar-estudiante' ? 'active' : ''}`}>
+                      {/*   <li className={`nav-item ${location.pathname === '/agregar-estudiante' ? 'active' : ''}`}>
                             <Link className="nav-link" to="/agregar-estudiante">Agregar Estudiante</Link>
                         </li>
                         <li className={`nav-item ${location.pathname === '/agregar-profesor' ? 'active' : ''}`}>
                             <Link className="nav-link" to="/agregar-profesor">Agregar Profesor</Link>
-                        </li>
+                        </li> */}
                         <li className={`nav-item ${location.pathname === '/calificaciones' ? 'active' : ''}`}>
                             <Link className="nav-link" to="/calificaciones">Calificaciones</Link>
                         </li>

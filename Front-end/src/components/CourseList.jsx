@@ -53,7 +53,7 @@ const CourseList = () => {
         });
         setShowAddForm(false);
     
-        
+        // Cargar estudiantes matriculados para el curso seleccionado
         try {
             const response = await axios.get(`http://127.0.0.1:8000/courses/${course.id}/students/`);
             const studentIds = response.data.estudiantes; 
@@ -86,7 +86,7 @@ const CourseList = () => {
         }));
     };
 
-    
+    // Add a new course
     const handleAddCourse = async (e) => {
         e.preventDefault();
         try {
@@ -105,7 +105,7 @@ const CourseList = () => {
         }
     };
 
-    
+    // Update an existing course
     const handleUpdateCourse = async (e) => {
         e.preventDefault();
         try {
@@ -128,7 +128,7 @@ const CourseList = () => {
         }
     };
 
-    
+    // Delete a course
     const handleDeleteCourse = async (courseId) => {
         try {
             await axios.delete(`http://127.0.0.1:8000/courses/${courseId}/`);
@@ -139,20 +139,20 @@ const CourseList = () => {
         }
     };
 
-    
+    // Generar y descargar reporte en PDF solo para el curso seleccionado
 const generatePDFReport = () => {
     const doc = new jsPDF();
 
-    
+    // Título del documento
     doc.setFontSize(18);
     doc.setFont('Helvetica', 'bold');
     doc.text("Reporte de Horarios y Asignaciones de Cursos", 20, 20);
     doc.setFont('Helvetica', 'normal');
-    doc.line(20, 25, 190, 25); 
+    doc.line(20, 25, 190, 25); // Línea debajo del título
     let yPosition = 30; 
 
     if (reportType === 'all') {
-        
+        // Generar reporte de todos los cursos
         courses.forEach((course, index) => {
             doc.setFontSize(14);
             doc.setFont('Helvetica', 'bold');
@@ -166,14 +166,14 @@ const generatePDFReport = () => {
             yPosition += 5; 
             const teacherName = teachers.find(t => t.id === course.profesor)?.nombre_completo || "Desconocido";
             doc.text(`Profesor: ${teacherName}`, 20, yPosition);
-            yPosition += 15; 
+            yPosition += 15; // Espacio entre cursos
 
-            
+            // Línea de separación entre cursos
             doc.line(20, yPosition, 190, yPosition);
             yPosition += 5; 
         });
     } else if (reportType === 'selected' && selectedCourse) {
-        
+        // Generar reporte del curso seleccionado
         doc.setFontSize(14);
         doc.setFont('Helvetica', 'bold');
         doc.text(`1. ${selectedCourse.nombre_del_curso}`, 20, yPosition);
@@ -202,7 +202,7 @@ const generatePDFReport = () => {
         }
     }
 
-    
+    // Guardar el documento
     doc.save('reporte_cursos.pdf');
 };
 

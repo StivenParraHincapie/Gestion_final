@@ -1,27 +1,39 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      
-    };
-  
-    return (
-      <div className="container mt-4">
-        <h2>Registrar</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email</label>
-            <input type="email" className="form-control" id="email" required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input type="password" className="form-control" id="password" required />
-          </div>
-          <button type="submit" className="btn btn-primary">Registrar</button>
-        </form>
-      </div>
-    );
+  const navigate = useNavigate();
+
+
+  const handleStudentsRedirect = () => {
+    navigate('/agregar-estudiante');
   };
-  
-  export default Register;
-  
+
+  const handleTeachersRedirect = () => {
+    navigate('/agregar-profesor');
+  };
+
+  return (
+    <div className="container mt-4">
+      <h2>Registro de Usuarios</h2>
+      <p>Seleccione el tipo de usuario que desea registrar:</p>
+      <div className="d-flex justify-content-around">
+        
+        <button 
+          className="btn btn-primary" 
+          onClick={handleStudentsRedirect}>
+          Registrar Estudiante
+        </button>
+
+      
+        <button 
+          className="btn btn-secondary" 
+          onClick={handleTeachersRedirect}>
+          Registrar Profesor
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Register;

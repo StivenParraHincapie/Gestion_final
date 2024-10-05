@@ -54,7 +54,7 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundColor: '#f8f9fa', 
+        backgroundColor: '#f8f9fa', // Fondo suave
         fontFamily: 'Arial, sans-serif',
     },
     form: {
@@ -87,7 +87,7 @@ const styles = {
         marginTop: '10px',
     },
     buttonHover: {
-        backgroundColor: '#0056b3', 
+        backgroundColor: '#0056b3', // Color más oscuro al pasar el mouse
     },
     errorMessage: {
         color: 'red',

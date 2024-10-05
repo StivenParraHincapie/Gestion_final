@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
 const Teachers = () => {
     const [nombreCompleto, setNombreCompleto] = useState('');
@@ -11,6 +12,7 @@ const Teachers = () => {
     const [contraseña, setContraseña] = useState('');
     const [mensaje, setMensaje] = useState(''); 
 
+    const navigate = useNavigate(); 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -37,6 +39,7 @@ const Teachers = () => {
 
             if (response.ok) {
                 setMensaje('Profesor agregado con éxito'); 
+             
                 setNombreCompleto('');
                 setCorreoElectronico('');
                 setNumeroTelefono('');
@@ -53,6 +56,11 @@ const Teachers = () => {
             console.error('Error:', error);
             setMensaje('Error al conectar con el servidor'); 
         }
+    };
+
+
+    const handleBackToRegister = () => {
+        navigate('/register');
     };
 
     return (
@@ -113,11 +121,16 @@ const Teachers = () => {
                 <button type="submit" style={styles.button}>Agregar Profesor</button>
             </form>
 
+    
             {mensaje && (
                 <div style={styles.alert}>
                     {mensaje}
                 </div>
             )}
+
+            <button onClick={handleBackToRegister} style={styles.backButton}>
+                Volver a Registro
+            </button>
         </div>
     );
 };
@@ -175,6 +188,17 @@ const styles = {
         border: 'none',
         borderRadius: '4px',
         cursor: 'pointer',
+        fontSize: '16px',
+    },
+    backButton: {
+        width: '100%',
+        padding: '10px',
+        backgroundColor: '#6c757d',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        marginTop: '20px',
         fontSize: '16px',
     },
     alert: {
