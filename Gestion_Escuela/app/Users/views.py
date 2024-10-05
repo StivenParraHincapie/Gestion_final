@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from .models import Usuarios
 
-# Create your views here.
+class UsuariosListView(ListView):
+    model = Usuarios
+    template_name = 'users/usuarios_list.html'  
