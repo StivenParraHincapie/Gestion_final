@@ -1,17 +1,15 @@
 from rest_framework import serializers
 from .models import Student
 from app.Courses.models import Course
-from app.Grades.models import Grade  
+from app.Grades.models import Grade
+from app.Courses.serializers import CourseSerializer  # Asegúrate de importar el CourseSerializer
 
 class StudentSerializer(serializers.ModelSerializer):
-    cursos = serializers.PrimaryKeyRelatedField(many=True, queryset=Course.objects.all(), required=False)
-    calificaciones_estudiante = serializers.PrimaryKeyRelatedField(many=True, queryset=Grade.objects.all(), required=False)
+    cursos = CourseSerializer(many=True, read_only=True)  # Usar CourseSerializer anidado
 
     class Meta:
         model = Student
-        fields = ['id', 'nombre_completo', 'correo_electronico', 'numero_telefono', 
-                  'fecha_nacimiento', 'direccion', 'rol', 'nombre_usuario', 
-                  'contraseña', 'cursos', 'calificaciones_estudiante']  
+        fields = '__all__'  
 
     def create(self, validated_data):
         cursos = validated_data.pop('cursos', [])  
