@@ -11,11 +11,11 @@ Trabajo elaborado por:
 
 * Iniciar el proyecto:
 
-  
  #Se crea un entorno virtual: python -m venv ent
  #Se activa al entorno virtual: ent\Scripts\activate.bat
  #Luego se instalan los requirements: pip install -r requirements.txt
- #Por último correr el servidor: python manage.py runserver
+ #Antes de ejecutar, modificar la BD para las migraciones 
+  #Por último correr el servidor: python manage.py runserver
  
 #Para el Front
 #npm install
