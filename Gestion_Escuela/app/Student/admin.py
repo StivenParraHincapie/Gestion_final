@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Student
 
-# Register your models here.
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre_completo', 'correo_electronico','numero_telefono')
+    search_fields = ('nombre_completo', 'correo_electronico')
