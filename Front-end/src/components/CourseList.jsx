@@ -202,7 +202,7 @@ const generatePDFReport = () => {
         }
     }
 
-    // Guardar el documento
+    
     doc.save('reporte_cursos.pdf');
 };
 

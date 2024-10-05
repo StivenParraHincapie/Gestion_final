@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '../src/context/auth/AuthContext'; 
+import NavBar from './components/NavBar';
+import Login from './components/Login';
+import CourseList from './components/CourseList';
+import Students   from './components/Students';
+import Teachers from './components/Teachers';
+import Calificaciones from './components/Calificaciones';
+import Register from './components/Register';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+    return (
+        <AuthProvider>
+            <Router>
+                <NavBar />
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/cursos" element={<CourseList />} />
+                    <Route path="/agregar-estudiante" element={<Students />} />
+                    <Route path="/agregar-profesor" element={<Teachers />} />
+                    <Route path="/Calificaciones" element={<Calificaciones />} />
+                    
+                </Routes>
+            </Router>
+        </AuthProvider>
+    );
+};
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+export default App;
