@@ -7,7 +7,6 @@ class Course(models.Model):
     descripcion = models.TextField()
     profesor = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='cursos')
     estudiantes = models.ManyToManyField('Student.Student', related_name='cursos_en_curso', blank=True)  
-
     horario = models.CharField(max_length=100)
 
     def __str__(self):

@@ -5,7 +5,7 @@ const Calificaciones = () => {
     const [estudiantes, setEstudiantes] = useState([]);
     const [cursosMatriculados, setCursosMatriculados] = useState([]);
     const [estudiante, setEstudiante] = useState('');
-    const [curso, setCurso] = useState('');
+    const [curso, setCurso] = useState(''); 
     const [calificacion, setCalificacion] = useState('');
     const [fechaEvaluacion, setFechaEvaluacion] = useState('');
     const [editId, setEditId] = useState(null);
@@ -34,11 +34,15 @@ const Calificaciones = () => {
             return;
         }
         const data = await response.json();
+        console.log('Cursos matriculados:', data); 
         setCursosMatriculados(data);
     };
+    
+    
 
     const handleEstudianteChange = (e) => {
         const selectedEstudiante = e.target.value;
+        console.log(selectedEstudiante);
         setEstudiante(selectedEstudiante);
         if (selectedEstudiante) {
             fetchCursosMatriculados(selectedEstudiante);
@@ -47,6 +51,7 @@ const Calificaciones = () => {
         }
         setCurso('');
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -84,7 +89,7 @@ const Calificaciones = () => {
 
     const handleEdit = (calificacion) => {
         setEstudiante(calificacion.estudiante.id);
-        setCurso(calificacion.curso.id);
+        setCurso(calificacion.curso.id); 
         setCalificacion(calificacion.calificacion);
         setFechaEvaluacion(calificacion.fecha_evaluacion);
         setEditId(calificacion.id);
@@ -111,7 +116,7 @@ const Calificaciones = () => {
         setCalificacion('');
         setFechaEvaluacion('');
         setEditId(null);
-        setCursosMatriculados([]);
+        setCursosMatriculados([]); 
     };
 
     return (
@@ -135,17 +140,17 @@ const Calificaciones = () => {
                 <div className="mb-3">
                     <label className="form-label">Curso</label>
                     <select
-                        className="form-select"
-                        value={curso}
-                        onChange={(e) => setCurso(e.target.value)}
-                        required
-                        disabled={!estudiante}
-                    >
-                        <option value="">Selecciona un curso</option>
-                        {cursosMatriculados.map((cur) => (
-                            <option key={cur.id} value={cur.id}>{cur.nombre_del_curso}</option>
-                        ))}
-                    </select>
+                    className="form-select"
+                    value={curso}
+                    onChange={(e) => setCurso(e.target.value)}
+                    required
+                    disabled={!estudiante}
+                >
+                    <option value="">Selecciona un curso</option>
+                    {cursosMatriculados.map((cur) => (
+                        <option key={cur.id} value={cur.id}>{cur.nombre_del_curso}</option>
+                    ))}
+                </select>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Calificación</label>

@@ -2,10 +2,10 @@ from rest_framework import serializers
 from .models import Student
 from app.Courses.models import Course
 from app.Grades.models import Grade
-from app.Courses.serializers import CourseSerializer  # Asegúrate de importar el CourseSerializer
+from app.Courses.serializers import CourseSerializer  
 
 class StudentSerializer(serializers.ModelSerializer):
-    cursos = CourseSerializer(many=True, read_only=True)  # Usar CourseSerializer anidado
+    cursos = CourseSerializer(many=True, read_only=True)  
 
     class Meta:
         model = Student
