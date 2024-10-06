@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const Calificaciones = () => {
     const [calificaciones, setCalificaciones] = useState([]);
     const [estudiantes, setEstudiantes] = useState([]);
     const [cursosMatriculados, setCursosMatriculados] = useState([]);
     const [estudiante, setEstudiante] = useState('');
-    const [curso, setCurso] = useState(''); 
+    const [curso, setCurso] = useState('');
     const [calificacion, setCalificacion] = useState('');
     const [fechaEvaluacion, setFechaEvaluacion] = useState('');
     const [editId, setEditId] = useState(null);
@@ -18,7 +20,24 @@ const Calificaciones = () => {
     const fetchCalificaciones = async () => {
         const response = await fetch('http://127.0.0.1:8000/grades/');
         const data = await response.json();
-        setCalificaciones(data);
+        
+        const calificacionesConEstudiantesYCursos = await Promise.all(
+            data.map(async (calificacion) => {
+                const estudianteResponse = await fetch(`http://127.0.0.1:8000/students/${calificacion.estudiante}/`);
+                const estudianteData = await estudianteResponse.json();
+                
+                const cursoResponse = await fetch(`http://127.0.0.1:8000/courses/${calificacion.curso}/`);
+                const cursoData = await cursoResponse.json();
+
+                return {
+                    ...calificacion,
+                    estudiante: estudianteData,
+                    curso: cursoData
+                };
+            })
+        );
+        
+        setCalificaciones(calificacionesConEstudiantesYCursos);
     };
 
     const fetchEstudiantes = async () => {
@@ -34,15 +53,11 @@ const Calificaciones = () => {
             return;
         }
         const data = await response.json();
-        console.log('Cursos matriculados:', data); 
         setCursosMatriculados(data);
     };
-    
-    
 
     const handleEstudianteChange = (e) => {
         const selectedEstudiante = e.target.value;
-        console.log(selectedEstudiante);
         setEstudiante(selectedEstudiante);
         if (selectedEstudiante) {
             fetchCursosMatriculados(selectedEstudiante);
@@ -51,7 +66,6 @@ const Calificaciones = () => {
         }
         setCurso('');
     };
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -89,7 +103,7 @@ const Calificaciones = () => {
 
     const handleEdit = (calificacion) => {
         setEstudiante(calificacion.estudiante.id);
-        setCurso(calificacion.curso.id); 
+        setCurso(calificacion.curso.id);
         setCalificacion(calificacion.calificacion);
         setFechaEvaluacion(calificacion.fecha_evaluacion);
         setEditId(calificacion.id);
@@ -116,7 +130,23 @@ const Calificaciones = () => {
         setCalificacion('');
         setFechaEvaluacion('');
         setEditId(null);
-        setCursosMatriculados([]); 
+        setCursosMatriculados([]);
+    };
+
+    const exportPDF = () => {
+        const doc = new jsPDF();
+        doc.text('Lista de Calificaciones', 14, 16);
+        doc.autoTable({
+            head: [['ID', 'Estudiante', 'Curso', 'Calificación', 'Fecha de Evaluación']],
+            body: calificaciones.map((calificacion) => [
+                calificacion.id,
+                calificacion.estudiante?.nombre_completo || 'Desconocido',
+                calificacion.curso?.nombre_del_curso || 'Desconocido',
+                calificacion.calificacion,
+                calificacion.fecha_evaluacion,
+            ]),
+        });
+        doc.save('calificaciones.pdf');
     };
 
     return (
@@ -177,6 +207,7 @@ const Calificaciones = () => {
             </form>
 
             <h3 className="mt-4 text-center">Lista de Calificaciones</h3>
+            <button onClick={exportPDF} className="btn btn-success mb-3">Exportar a PDF</button>
             <table className="table table-striped table-hover mt-3">
                 <thead className="table-light">
                     <tr>
@@ -192,8 +223,8 @@ const Calificaciones = () => {
                     {calificaciones.map((calificacion) => (
                         <tr key={calificacion.id}>
                             <td>{calificacion.id}</td>
-                            <td>{calificacion.estudiante.nombre}</td>
-                            <td>{calificacion.curso.nombre}</td>
+                            <td>{calificacion.estudiante?.nombre_completo || 'Desconocido'}</td>
+                            <td>{calificacion.curso?.nombre_del_curso || 'Desconocido'}</td>
                             <td>{calificacion.calificacion}</td>
                             <td>{calificacion.fecha_evaluacion}</td>
                             <td>
