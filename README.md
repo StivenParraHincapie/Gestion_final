@@ -21,3 +21,6 @@ Trabajo elaborado por:
 #npm install
 #pip install vite
 #npm run dev
+
+* Para los exporte de las calificaciones:
+desde el entorno en el front:  npm install jspdf jspdf-autotable y npm install jspdf 
