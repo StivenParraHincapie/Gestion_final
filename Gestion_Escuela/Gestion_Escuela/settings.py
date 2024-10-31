@@ -59,14 +59,11 @@ WSGI_APPLICATION = 'Gestion_Escuela.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gestion',  # Reemplaza con el nombre de tu base de datos
-        'USER': 'postgres',  # Reemplaza con tu usuario de PostgreSQL
-        'PASSWORD': '12345',  # Reemplaza con tu contraseña de PostgreSQL
-        'HOST': 'localhost',  # Normalmente localhost
-        'PORT': '5432',  # El puerto predeterminado de PostgreSQL
+        'ENGINE': 'django.db.backends.sqlite3',  # Usar SQLite como base de datos
+        'NAME': BASE_DIR / 'db.sqlite3',  # Ruta a tu archivo de base de datos
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
